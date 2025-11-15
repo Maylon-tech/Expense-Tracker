@@ -1,18 +1,13 @@
-require("dotenv").config()
-const express = require("express")
-const cors = require("cors")
-const path = require("path")
+import dotenv from 'dotenv'
+import express from 'express'
+import path from 'path'
+import cors from 'cors'
+import connectDB from './config/db.js'
 
-const connectDB = require("./config/db")
-const authRoutes = require("./routes/authRoutes")
-
-
-// import express from 'express'
-// import cors from 'cors'
-// import path from 'path'
-// import connectDB from './config/db.js'
+import authRoutes from "./routes/authRoutes.js"
 
 const app = express()
+dotenv.config()
 
 // Middleware to handle CORS
 app.use(
@@ -23,9 +18,9 @@ app.use(
     })
 )
 
+connectDB()
 app.use(express.json())
 
-connectDB()
 app.use("/api/v1/auth", authRoutes)
 
 const PORT = process.env.PORT || 5000

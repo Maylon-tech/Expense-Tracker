@@ -1,14 +1,45 @@
-const jwt = require("jsonwebtoken")
+import User from '../models/User.js'
+import jwt from "jsonwebtoken"
 
 // Generate JWT Token
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "1h" })
-
 }
 
 // Register User
-exports.registerUser = async (req, res) => { }
+export const registerUser = async (req, res) => {
+    const { fullName, email, password, profileImageUrl } = req.body
 
-exports.loginUser = async (req, res) => { }
+    // Validation - Check for missing fields
+    if (!fullName || !email || !password) {
+        return res.status(400).json({ message: "All fields are requred" })
+    }
+    try {
+        // Check if email already exits
+        const existingUser = await User.findOne({ email })
+        if (existingUser) {
+            return res.status(400).json({ message: "Email already in use" })
+        }
 
-exports.getUserInfo = async(req, res) => {}
+        // Create the user
+        const user = await User.create({
+            fullName,
+            email,
+            password,
+            profileImageUrl,
+        })
+        res.status(201).json({
+            id: user._id,
+            user,
+            token:generateToken(user._id),
+        })
+    } catch (error) {
+        res.status(500).json({ message: "Error registering user", error: error.message })
+    }
+}
+
+// Login User
+export const loginUser = async (req, res) => { }
+
+// List User
+export const getUserInfo = async(req, res) => {}
