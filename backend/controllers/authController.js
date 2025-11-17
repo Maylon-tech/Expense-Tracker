@@ -39,7 +39,47 @@ export const registerUser = async (req, res) => {
 }
 
 // Login User
-export const loginUser = async (req, res) => { }
+export const loginUser = async (req, res) => {
+    const { email, password } = req.body
 
-// List User
-export const getUserInfo = async(req, res) => {}
+    // Validation - Check for missing fields
+    if (!email || !password) {
+        return res.status(400).json({ message: "All fields are requred" })
+    }
+
+    try {
+        // Check if email already exits
+        const user = await User.findOne({ email })
+        if (!user || !(await user.comparePassword(password))) {
+            return res.status(400).json({ message: "Invalid credentials" })
+        }
+        
+        res.status(200).json({
+            id: user._id,
+            user,
+            token:generateToken(user._id),
+        })
+    } catch (error) {
+        res
+            .status(500)
+            .json({ message: "Error Login with user", error: error.message })
+    }
+
+}
+
+// Get User Info
+export const getUserInfo = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select("-password")
+    
+        if (!user) {
+            return res.status(404).json({ message: "User not found..!!" })
+        }
+
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json({ message: "Error request user info", error: error.message })
+    } 
+
+
+}
