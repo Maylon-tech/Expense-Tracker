@@ -3,7 +3,7 @@ import multer from 'multer'
 // configure storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'upload/')
+        cb(null, 'uploads/')
     },
     filename: (req, file, cb) => {
         cb(null, `${Date.now()}-${file.originalname}`)
