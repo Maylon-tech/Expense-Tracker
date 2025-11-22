@@ -11,8 +11,8 @@ const incomeRouter = express.Router()
 
 incomeRouter.post("/add", protect, addIncome)
 incomeRouter.get("/get", protect, getAllIncome)
-incomeRouter.get("/downloadexcel", protect, downloadIncomeExcell)
 incomeRouter.delete("/:id", protect, deleteIncome)
+incomeRouter.get("/downloadexcel", protect, downloadIncomeExcell)
 
 
 export default incomeRouter
