@@ -1,5 +1,5 @@
-import Income from "../models/Income"
-import Expense from "../models/Expense"
+import Income from "../models/Income.js"
+import Expense from "../models/Expense.js"
 import { isValidObjectId, Types } from "mongoose"
 
 // Dashboard Data
@@ -11,11 +11,11 @@ export const getDashboardData = async (req, res) => {
 
         // Fetch total income & expenses
         const totalIncome = await Income.aggregate([
-            { $match: { userId: userObjectid } },
+            { $match: { userId: userObjectId } },
             { $group: { _id: null, total: { $sum: "$amount" } } },
         ])
 
-        console.log("TotalIncome", { totalIncome, userId: isValidObjectId(userId) })
+        console.log("totalIncome", { totalIncome, userId: isValidObjectId(userId) })
         
         const totalExpense = await Expense.aggregate([
             { $match: { userId: userObjectId } },
@@ -39,19 +39,19 @@ export const getDashboardData = async (req, res) => {
         }).sort({ date: -1 })
 
         // Get total expense for last 30 days
-        const expenseLast30Days = last30DaysExpenseTransactions.reduce(
+        const expensesLast30Days = last30DaysExpenseTransactions.reduce(
             (sum, transaction) => sum + transaction.amount, 0
         )
 
         // Fetch last 5 transactions (income + expenses)
         const lastTransactions = [
-            ...(await Income.find({ userId }).sort({ date: -1 }).limit(5)).map((text) => ({
-                ...text.toObject(),
+            ...(await Income.find({ userId }).sort({ date: -1 }).limit(5)).map((txn) => ({
+                ...txn.toObject(),
                 type: "income",
             })
           ),
             ...(await Expense.find({ userId }).sort({ date: -1 }).limit(5)).map((text) => ({
-                ...text.toObject(),
+                ...txn.toObject(),
                 type: "expense",
             })
           ),
@@ -71,7 +71,7 @@ export const getDashboardData = async (req, res) => {
                 total: incomeLast60Days,
                 transactions: last60DaysIncomeTransactions,
             },
-            recentTRansactions: lastTransactions,
+            recentTransactions: lastTransactions,
         })
     } catch (error) {
         res.status(500).json({ message: "Server Error", error })

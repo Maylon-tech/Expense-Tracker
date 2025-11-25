@@ -1,14 +1,11 @@
 import express from 'express'
-
-import {
-    getDashboardData,
-} from '../controllers/dashboardController.js'
 import { protect } from '../middleware/authMiddleware.js'
+import { getDashboardData } from '../controllers/dashboardController.js'
 
-const dashboardRouter = express.Router()
+const router = express.Router()
 
-dashboardRouter.get("/get", protect, getDashboardData)
+router.get("/", protect, getDashboardData)
 
 
 
-export default dashboardRouter
+export default router
