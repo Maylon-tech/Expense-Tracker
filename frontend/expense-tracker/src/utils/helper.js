@@ -16,3 +16,16 @@ export const getInitials = (name) => {
 
     return initials.toUpperCase()
 }
+
+export const addThounsandsSeparator = (num) => {
+    if (num == null || isNaN(num)) return
+    
+    const [integerPart, fractionalPart] = num.toString().split(".")
+    const formatedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+    return fractionalPart
+        ? `${formatedInteger}.${fractionalPart}`
+        : formatedInteger
+
+
+}
