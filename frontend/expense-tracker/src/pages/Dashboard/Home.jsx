@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+
 import DashboardLayout from "../../components/layouts/DashboardLayout"
 import { useUserAuth } from "../../hooks/useUserAuth"
 import axiosInstance from "../../utils/axiosInstance"
 import { API_PATHS } from "../../utils/apiPaths"
+import { addThounsandsSeparator } from "../../utils/helper"
 import InfoCard from "../../components/Cards/InfoCard"
+import RecentTransactions from "../../components/Dashboard/RecentTransactions"
 
 import { LuHandCoins, LuWalletMinimal } from 'react-icons/lu'
 import { IoMdCard } from 'react-icons/io'
-import { addThounsandsSeparator } from "../../utils/helper"
-import RecentTransactions from "../../components/Dashboard/RecentTransactions"
 
 const Home = () => {
   useUserAuth()
@@ -75,6 +76,12 @@ const Home = () => {
           <RecentTransactions
             transactions={dashboardData?.RecentTransactions}
             onSeeMore={() => navigate("/expense")}
+          />
+          
+          <FinanceOverview
+            totalBalance={dashboardData?.totalBalance || 0}
+            totalIncome={dashboardData?.totalIncome || 0}
+            totalExpense={dashboardData?.totalExpense || 0}
           />
         </div>
       </div>
