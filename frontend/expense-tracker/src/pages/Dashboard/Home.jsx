@@ -14,6 +14,7 @@ import { IoMdCard } from 'react-icons/io'
 import FinanceOverview from "../../components/Dashboard/FinanceOverview"
 import ExpenseTransactions from "../../components/Dashboard/ExpenseTransactions"
 import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart"
+import RecentIncome from "../../components/Dashboard/RecentIncome"
 
 const Home = () => {
   useUserAuth()
@@ -99,6 +100,11 @@ const Home = () => {
           <RecentIncomeWithChart
             data={dashboardData?.last60DaysIncome?.transactions?.slice(0,4) || []}
             totalIncome={dashboardData?.totalIncome || 0}
+          />
+
+          <RecentIncome
+            transactions={dashboardData?.last60DaysIncome?.transactions || []}
+            onSeeMore={() => navigate("/income")}
           />
         </div>
       </div>

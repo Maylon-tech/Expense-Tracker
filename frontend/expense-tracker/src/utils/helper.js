@@ -26,8 +26,6 @@ export const addThounsandsSeparator = (num) => {
     return fractionalPart
         ? `${formatedInteger}.${fractionalPart}`
         : formatedInteger
-
-
 }
 
 export const prepareExpenseBarChartData = (data = []) => {
@@ -35,6 +33,9 @@ export const prepareExpenseBarChartData = (data = []) => {
         category: item?.category,
         amount: item?.amount,
     }))
-
     return chartData
+}
+
+export const prepareIncomeBarChartData = (data = []) => {
+    const sortedData = [...data].sort((a, b) => new Date(a.date) -)
 }
