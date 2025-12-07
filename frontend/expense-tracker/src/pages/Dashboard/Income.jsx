@@ -3,6 +3,7 @@ import DashboardLayout from "../../components/layouts/DashboardLayout"
 import IncomeOverview from "../../components/Income/IncomeOverview"
 import { API_PATHS } from "../../utils/apiPaths"
 import axiosInstance from "../../utils/axiosInstance"
+import Modal from "../../components/Modal"
 
 
 const Income = () => {
@@ -63,6 +64,14 @@ const Income = () => {
             />
           </div>
         </div>
+
+        <Modal
+          title="Add Income"
+          onClose={() => setOpenAddIncomeModal(false)}
+          inOpen={openAddIncomeModal}
+        >
+          <div className="">Add Income Form</div>
+        </Modal>
       </div>
     </DashboardLayout>
   )
