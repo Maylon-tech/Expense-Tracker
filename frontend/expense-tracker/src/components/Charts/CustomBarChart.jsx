@@ -40,7 +40,7 @@ const CustomBarChart = ({ data }) => {
     }
 
   return (
-    <div className="bg-violet-500 mt-6">
+    <div className="mt-6">
         <ResponsiveContainer width="100%" height={300}>
             <BarChart data={data}>
                 <CartesianGrid stroke="none" />
