@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+
 import DashboardLayout from "../../components/layouts/DashboardLayout"
 import IncomeOverview from "../../components/Income/IncomeOverview"
 import { API_PATHS } from "../../utils/apiPaths"
@@ -90,7 +91,7 @@ const Income = () => {
       await axiosInstance.delete(API_PATHS.INCOME.DELETE_INCOME(id))
 
       setOpenDeleteAlert({ show: false, data: null })
-      // toast.success("Income details deleted successfully.")
+      //toast.success("Income details deleted successfully.")
       alert("Income details deleted successfully.")
       fetchIncomeDetails()
     } catch (error) {

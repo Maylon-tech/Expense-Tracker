@@ -34,5 +34,5 @@ export const useUserAuth = () => {
             isMounted = false
         }
 
-    }, [updateUser, clearUser, navigate])
+    }, [updateUser, clearUser, user, navigate])
 }
