@@ -50,7 +50,7 @@ export const getDashboardData = async (req, res) => {
                 type: "income",
             })
           ),
-            ...(await Expense.find({ userId }).sort({ date: -1 }).limit(5)).map((text) => ({
+            ...(await Expense.find({ userId }).sort({ date: -1 }).limit(5)).map((txn) => ({
                 ...txn.toObject(),
                 type: "expense",
             })
@@ -74,6 +74,6 @@ export const getDashboardData = async (req, res) => {
             recentTransactions: lastTransactions,
         })
     } catch (error) {
-        res.status(500).json({ message: "Server Error", error })
+        res.status(500).json({ message: "Server Error.. WHY!!", error })
     }
 }
